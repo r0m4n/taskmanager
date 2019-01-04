@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="text-center">
+    <form [formGroup]="filterForm">
+      <div class="btn-group">
+        <div class="radio btn">
+          <input
+            type="radio"
+            id="btn-demo-radio-1"
+            formControlName="taskFilter"
+            value="all"
+            checked="checked"
+          />
+          <label for="btn-demo-radio-1">All</label>
+        </div>
+
+        <div class="radio btn">
+          <input
+            type="radio"
+            id="btn-demo-radio-2"
+            formControlName="taskFilter"
+            value="dueSoon"
+          />
+          <label for="btn-demo-radio-2">Due Soon</label>
+        </div>
+        <div class="radio btn">
+          <input
+            type="radio"
+            id="btn-demo-radio-3"
+            formControlName="taskFilter"
+            value="overdue"
+          />
+          <label for="btn-demo-radio-3">Overdue</label>
+        </div>
+        <div class="radio btn">
+          <input
+            type="radio"
+            id="btn-demo-radio-4"
+            formControlName="taskFilter"
+            value="isComplete"
+          />
+          <label for="btn-demo-radio-4">Completed</label>
+        </div>
+      </div>
+      <span class="text-center" *ngIf="!showNewTask">
+        <button (click)="clickAddTask()" class="btn btn-primary">
+          New Task
+        </button>
+      </span>
+    </form>
+  </div>
+  <div class="clr-row clr-justify-content-center" *ngIf="showNewTask">
+    <div class="clr-col-12">
+      <div class="card">
+        <form [formGroup]="newTaskForm">
+          <div class="card-header">
+            <input
+              clrInput
+              placeholder="New Task Name"
+              formControlName="name"
+            />
+          </div>
+          <div class="card-block">
+            <div class="card-text">
+              <input type="date" clrDate formControlName="dueDate" />
+              <clr-textarea-container>
+                <textarea
+                  clrTextarea
+                  formControlName="description"
+                  placeholder="Your description here"
+                ></textarea>
+              </clr-textarea-container>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button (click)="addTask()" class="btn btn-sm btn-link">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="clr-row clr-justify-content-center">
+    <div
+      *ngFor="let task of (tasks | taskFilter: filterForm.value.taskFilter)"
+      class="clr-col-12 task-item"
+    >
+      <div class="card clickable">
+        <div
+          [className]="task.isComplete ? 'complete-task' : 'incomplete-task'"
+        >
+          <div class="card-header">
+            <div class="task-name">{{ task.name }}</div>
+
+            <!-- <div class="card-block">
+            <div class="card-text">{{ task.description }}</div>
+          </div> -->
+            <div class="task-button-container">
+              <span
+                [ngClass]="{
+                  'label-warning': ([task] | taskFilter: 'dueSoon').length, 'label-danger': ([task] | taskFilter: 'overdue').length
+                }"
+                class="task-dueDate label "
+              >
+                Due {{ task.dueDate | date }}
+              </span>
+              <button
+                *ngIf="!task.isComplete"
+                (click)="completeTask(task)"
+                class="btn btn-icon"
+              >
+                <clr-icon shape="check"></clr-icon>
+              </button>
+              <button (click)="deleteTask(task)" class="btn btn-icon">
+                <clr-icon shape="trash"></clr-icon>
+              </button>
+            </div>
+          </div>
+          <!-- <div class="card-footer">
+
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

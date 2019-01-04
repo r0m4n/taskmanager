@@ -1,0 +1,23 @@
+.new-task-container {
+  margin-top: 1.5rem;
+}
+.complete-task {
+  .card-header {
+    text-decoration: line-through;
+  }
+
+  opacity: 0.25;
+}
+
+.task-item {
+  .card-header{
+    display:flex;
+    justify-content: space-between;
+  }
+  .task-name {
+    align-self: center;
+  }
+  .task-dueDate{
+    vertical-align: text-bottom;
+  }
+}
