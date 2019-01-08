@@ -57,7 +57,7 @@ export class TaskService {
   //   }
 
   getTasks() {
-    return this.all(`SELECT name, description, dueDate, isComplete FROM tasks ORDER BY id DESC`);
+    return this.all(`SELECT id, name, description, dueDate, isComplete FROM tasks ORDER BY id DESC`);
   }
 
   createTask(task) {
